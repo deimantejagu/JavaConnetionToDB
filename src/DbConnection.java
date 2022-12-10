@@ -2,7 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DbConnection {
-    public Connection ConnectToDb(String dbname, String user, String pass) {
+    public void ConnectToDb(String dbname, String user, String pass) {
         Connection conn = null;
         try {
             Class.forName("org.postgresql.Driver");
@@ -17,7 +17,5 @@ public class DbConnection {
         } catch (Exception e) {
             System.out.println(e);
         }
-
-        return conn;
     }
 }
