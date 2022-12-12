@@ -5,155 +5,92 @@ import java.util.Objects;
 import java.util.Scanner;
 public class ProgramLoop {
     private static final Scanner input = new Scanner(System.in);
-    private static final Scanner data = new Scanner(System.in);
-    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private static int selection = 0;
+    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public static void ProgramWorking(){
-         String option;
-
-        while (selection < 11){
+        while (selection < 12){
             selection = input.nextInt();
+            int option;
 
             switch (selection){
                 case 0:
                     UserActions();
                     break;
                 case 1:
-                    UserAllOrders userAllOrders = new UserAllOrders();
-                    System.out.println("Ar norite pamatyti informaciją apie pirkėjus? (taip/ne) ");
-                    option = data.nextLine();
-
-                    if(Objects.equals(option, "taip")){
-                        // Isspausdina apie pirkėjus
-                        userAllOrders.ShowUsers();
-                    }
-
-                    System.out.println("Įveskite pirkėjo ID, kurio užsakymus norite sužinoti: ");
-                    int id = input.nextInt();
-                    userAllOrders.ShowAllUserOrders(id);
+                    System.out.println("Įveskite vardą: ");
+                    System.out.println("Įveskite pavardę: ");
+                    System.out.println("Įveskite telefono numerį: ");
+                    System.out.println("Įveskite el. paštą: ");
+                    System.out.println("Įveskite adresą: ");
 
                     ShowUserActions();
                     break;
                 case 2:
-                    CustomersHaveSpentInTheStore customers = new CustomersHaveSpentInTheStore();
-
-                    System.out.println("Pirkėjai yra išleidę:\n");
-                    customers.ShowHowMuchCustomersHaveSpentInTheStore();
-
                     ShowUserActions();
                     break;
                 case 3:
-                    System.out.println("Įvykdyti užsakymai:\n");
+                    System.out.println("Įveskite pirkėjo ID, kurio informaciją norite atnaujinti: ");
+                    System.out.println(
+                        "Pasirinkite, kokią informaciją norite atnaujinti:\n" +
+                            "\t0. Telefono numerį\n" +
+                            "\t1. El. paštą\n" +
+                            "\t2. Adresą"
+                    );
+
                     ShowUserActions();
                     break;
                 case 4:
-                    String phoneNumber = null;
-                    String email = null;
+                    System.out.println("Įveskite pirkėjo ID, kurį norite pašalinti: ");
 
-                    System.out.println("Įveskite pirkėjo vardą: ");
-                    String name = data.nextLine();
-                    System.out.println("Įveskite pirkėjo pavardę: ");
-                    String surname = data.nextLine();
-                    System.out.println("Ar norite pridėti pirkėjo telefono numerį? (taip/ne)");
-                    option = data.nextLine();
-
-                    if(Objects.equals(option, "taip")){
-                        System.out.println("Įveskite telefono numerį ");
-                        phoneNumber = data.nextLine();
-                    }
-
-                    System.out.println("Ar norite pridėti pirkėjo elektroninį paštą? (taip/ne)");
-                    option = data.nextLine();
-
-                    if(Objects.equals(option, "taip")){
-                        System.out.println("Įveskite elektroninį paštą ");
-                        email = data.nextLine();
-                    }
-
-                    System.out.println("Įveskite pirkėjo adresą: ");
-                    String address = data.nextLine();
-                    System.out.println(name + " " + surname + " " + phoneNumber + " " + email + " " + address);
                     ShowUserActions();
                     break;
                 case 5:
-                    System.out.println("Įveskite pirkėjo vardą: ");
-                    name = data.nextLine();
-                    System.out.println("Įveskite pirkėjo pavardę: ");
-                    surname = data.nextLine();
+                    System.out.println("Įveskite pirkėjo ID: ");
                     System.out.println("Įveskite pristatymo trukmę: ");
-                    int duration;
-                    try {
-                        duration = Integer.parseInt(br.readLine());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println("Įveskite prekes: ");
-                    String item;
-                    try {
-                        item = br.readLine();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println("Įveskite prekės kiekį: ");
-                    int amount = data.nextInt();
+                    System.out.println("Įveskite prekės pavadinimą: ");
+                    System.out.println("Įveskite prekių kiekį: ");
 
-                    System.out.println(duration + " " + name + " " + surname + " " + item + " " + amount);
                     ShowUserActions();
                     break;
                 case 6:
-                    System.out.println("Įveskite prekės pavadinimą: ");
-                    String title = data.nextLine();
-                    System.out.println("Įveskite prekės kategoriją: ");
-                    String category = data.nextLine();
-                    System.out.println("Įveskite prekės kainą: ");
-                    float price = data.nextFloat();
+                    System.out.println("Įveskite užsakymo būseną: ");
 
-                    System.out.println(title + " " + category + " " + price);
                     ShowUserActions();
                     break;
                 case 7:
-                    System.out.println("Įveskite užsakymo ID, kurio būseną norite pakeisti: ");
-                    try {
-                        id = Integer.parseInt(br.readLine());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    System.out.println("Įveskite naują būseną: ");
-                    String state;
-                    try {
-                        state = br.readLine();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    System.out.println("Įveskite užsakymo Nr., kurį norite pašalinti: ");
 
-                    System.out.println(id + " " + state);
                     ShowUserActions();
                     break;
                 case 8:
-                    System.out.println("Įveskite užsakymo prekės pavadinimą, kurios kainą norite pakeisti: ");
-                    title = data.nextLine();
+                    System.out.println("Įveskite prekės pavadinimą: ");
+                    System.out.println("Įveskite prekės kategoriją: ");
                     System.out.println("Įveskite prekės kainą: ");
-                    price = data.nextFloat();
 
-                    System.out.println(title + " " + price);
                     ShowUserActions();
                     break;
                 case 9:
-                    System.out.println("Pasirinkite pirkėjo ID, kurį norite pašalinti: ");
-                    id = data.nextInt();
 
-                    System.out.println("Pirkėjas ID =" + " " + id + " " + "pašalintas");
                     ShowUserActions();
                     break;
                 case 10:
-                    System.out.println("Pasirinkite užsakymo Nr, kurį norite pašalinti: ");
-                    id = data.nextInt();
+                    System.out.println("Įveskite prekės kodą, kurios informaciją norite atnaujinti: ");
+                    System.out.println(
+                        "Pasirinkite, kokią informaciją norite atnaujinti:\n" +
+                            "\t0. Pavadinimą\n" +
+                            "\t1. Kategoriją\n" +
+                            "\t2. Kainą"
+                    );
 
-                    System.out.println("Užsakymas Nr =" + " " + id + " " + "pašalintas");
                     ShowUserActions();
                     break;
                 case 11:
+                    System.out.println("Įveskite prekės kodą, kurią norite pašalinti: ");
+
+                    ShowUserActions();
+                    break;
+                case 12:
                     System.out.println("Programa išsijungia...");
                     break;
             }
@@ -164,22 +101,24 @@ public class ProgramLoop {
         System.out.println(
             "Pasirinkite veiksmą, kurį norite atlikti:\n" +
                 "\t0. Pamatyti veiksmų sąrašą\n" +
-                "\t1. Sužinoti, visus vieno pirkėjo užsakymus\n" +
-                "\t2. Sužinoti, kiek pirkėjai yra išleidę parduotuvėje\n" +
-                "\t3. Sužinoti, visus įvykdytus užsakymus\n" +
-                "\t4. Užregistruoti naują pirkeją\n" +
+                "\t1. Užregistruoti naują pirkėją\n" +
+                "\t2. Pamatyti pirkėjų sąrašą\n" +
+                "\t3. Atnaujinti informaciją apie pirkėją\n" +
+                "\t4. Pašalinti pirkėją\n" +
                 "\t5. Sukurti naują užsakymą\n" +
-                "\t6. Užregistruoti naujas prekes\n" +
-                "\t7. Pakeisti prekės kainą\n" +
-                "\t8. Pakeisti užsakymo būseną\n" +
-                "\t9. Pašalinti pirkėją\n" +
-                "\t10. Pašalinti užsakymą\n" +
-                "\t11. Baigti darbą"
+                "\t6. Atnaujinti užsakymo būseną\n" +
+                "\t7. Pašalinti užsakymą\n" +
+                "\t8. Pridėti naujas prekes\n" +
+                "\t9. Pamatyti prekių sąrašą\n" +
+                "\t10. Atnaujinti informaciją apie prekę\n" +
+                "\t11. Pašalinti užsakymą\n" +
+                "\t12. Baigti darbą"
         );
     }
 
     private static void ShowUserActions(){
         System.out.println("Ar norite pamatyti veiksmų sąrašą? (taip/ne)");
+        Scanner data = new Scanner(System.in);
         String option = data.nextLine();
         if(Objects.equals(option, "taip")){
             UserActions();

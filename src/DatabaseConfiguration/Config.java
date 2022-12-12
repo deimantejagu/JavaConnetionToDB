@@ -1,13 +1,15 @@
-public class ConfigExample {
+package DatabaseConfiguration;
+
+public class Config {
     public static String DatabaseName(){
-        return "NAME";
+        return "postgres";
     }
 
     public static String DatabaseUser(){
-        return "USER";
+        return "postgres";
     }
 
     public static String DatabasePassword(){
-        return "PASSSWORD";
+        return "dundukas123";
     }
 }
