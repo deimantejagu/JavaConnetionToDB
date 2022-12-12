@@ -1,5 +1,8 @@
 import DatabaseConfiguration.GetConnection;
+import Tables.Customer;
 import Tables.Item;
+import Tables.Order;
+import Tables.UzsakymoElementas;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +19,12 @@ public class ProgramLoop {
         GetConnection connection = new GetConnection();
         connection.setConnection();
 
-        while (selection < 12){
+        Order order = new Order(connection);
+        Customer customer = new Customer(connection);
+        Item item = new Item(connection);
+        UzsakymoElementas elementas = new UzsakymoElementas(connection);
+
+        while (selection < 14){
             selection = input.nextInt();
 
             switch (selection){
@@ -44,11 +52,17 @@ public class ProgramLoop {
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println(name + " " + surname + " " + phoneNumber + " " + email + " " + address);
+                    customer.CreateCustomer(name, surname, phoneNumber, email, address);
 
                     ShowUserActions();
                     break;
                 case 2:
+                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    System.out.printf("%-18s%-30s%-30s%-30s%-30s%-30s%n", "ID", "Vardas", "Pavardė", "Tel. numeris", "El. paštas", "Adresas");
+                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    customer.ShowCustomers();
+                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+
                     ShowUserActions();
                     break;
                 case 3:
@@ -80,7 +94,7 @@ public class ProgramLoop {
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println(id);
+                    customer.DeleteCustomer(id);
 
                     ShowUserActions();
                     break;
@@ -101,37 +115,49 @@ public class ProgramLoop {
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println(id + " " + duration + " " + title + " " + amount);
+                    order.CreateOrder(id, duration, title, amount);
 
                     ShowUserActions();
                     break;
                 case 6:
+                    System.out.println("-----------------------------------------------------------------------------------------------------------------");
+                    System.out.printf("%-18s%-37s%-28s%-20s%-14s%n", "Nr.", "Užsakymo data", "Pristatymo trukmė", "Būsena", "Pirkėjo ID");
+                    System.out.println("------------------------------------------------------------------------------------------------------------------");
+                    order.ShowOrders();
+                    System.out.println("------------------------------------------------------------------------------------------------------------------");
+
+
+                    ShowUserActions();
+                    break;
+                case 7:
                     String state;
-                    System.out.println("Įveskite užsakymo būseną: ");
+                    int nr;
                     try {
+                        System.out.println("Pasirinkite užsakymo Nr., kurį norite atnaujinti: ");
+                        nr = Integer.parseInt(br.readLine());
+                        System.out.println("Įveskite užsakymo būseną: ");
                         state = br.readLine();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println(state);
+                    order.UpdateOrdersState(state, nr);
 
                     ShowUserActions();
                     break;
-                case 7:
+                case 8:
                     System.out.println("Įveskite užsakymo Nr., kurį norite pašalinti: ");
-                    int nr = 0;
                     try {
                         nr = Integer.parseInt(br.readLine());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println(nr);
+                    order.DeleteOrder(nr);
 
                     ShowUserActions();
                     break;
-                case 8:
+                case 9:
                     String category;
                     float price;
                     try {
@@ -145,17 +171,20 @@ public class ProgramLoop {
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println(title + " " + category + " " + price);
-
-                    ShowUserActions();
-                    break;
-                case 9:
-                    Item item = new Item(connection);
-                    item.ShowItems();
+                    item.CreateItem(category, title, price);
 
                     ShowUserActions();
                     break;
                 case 10:
+                    System.out.println("-------------------------------------------------------------------------------------");
+                    System.out.printf("%-18s%-28s%-28s%-14s%n", "Prekės kodas", "Kategorija", "Pavadinimas", "Kaina");
+                    System.out.println("-------------------------------------------------------------------------------------");
+                    item.ShowItems();
+                    System.out.println("-------------------------------------------------------------------------------------");
+
+                    ShowUserActions();
+                    break;
+                case 11:
                     System.out.println("Įveskite prekės kodą, kurios informaciją norite atnaujinti: ");
                     /*System.out.println(
                         "Pasirinkite, kokią informaciją norite atnaujinti:\n" +
@@ -164,19 +193,7 @@ public class ProgramLoop {
                             "\t2. Kainą"
                     );*/
 
-                    int code = 0;
-                    try {
-                        code = Integer.parseInt(br.readLine());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    System.out.println(code);
-
-                    ShowUserActions();
-                    break;
-                case 11:
-                    System.out.println("Įveskite prekės kodą, kurią norite pašalinti: ");
+                    int code;
                     try {
                         code = Integer.parseInt(br.readLine());
                     } catch (IOException e) {
@@ -188,6 +205,34 @@ public class ProgramLoop {
                     ShowUserActions();
                     break;
                 case 12:
+                    System.out.println("Įveskite prekės kodą, kurią norite pašalinti: ");
+                    try {
+                        code = Integer.parseInt(br.readLine());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    item.DeleteItem(code);
+
+                    ShowUserActions();
+                    break;
+                case 13:
+                    System.out.println("Įveskite užsakymo Nr., kurio sudėtį norite sužinoti ");
+                    try {
+                        nr = Integer.parseInt(br.readLine());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    System.out.println("-----------------------------------------------------------------------------------------------------");
+                    System.out.printf("%-26s%-18s%-18s%-30s%-18s%n", "Prekės Nr. eilėje", "Užsakymo Nr.", "Prekės Kodas", "Pavadinimas", "Kiekis");
+                    System.out.println("-----------------------------------------------------------------------------------------------------");
+                    elementas.ShowOrdersStructure(nr);
+                    System.out.println("-----------------------------------------------------------------------------------------------------");
+
+                    ShowUserActions();
+                    break;
+                case 14:
                     System.out.println("Programa išsijungia...");
                     break;
             }
@@ -203,13 +248,15 @@ public class ProgramLoop {
                 "\t3. Atnaujinti informaciją apie pirkėją\n" +
                 "\t4. Pašalinti pirkėją\n" +
                 "\t5. Sukurti naują užsakymą\n" +
-                "\t6. Atnaujinti užsakymo būseną\n" +
-                "\t7. Pašalinti užsakymą\n" +
-                "\t8. Pridėti naujas prekes\n" +
-                "\t9. Pamatyti prekių sąrašą\n" +
-                "\t10. Atnaujinti informaciją apie prekę\n" +
-                "\t11. Pašalinti užsakymą\n" +
-                "\t12. Baigti darbą"
+                "\t6. Pamatyti užsakymų sąrašą\n" +
+                "\t7. Atnaujinti užsakymo būseną\n" +
+                "\t8. Pašalinti užsakymą\n" +
+                "\t9. Pridėti naujas prekes\n" +
+                "\t10. Pamatyti prekių sąrašą\n" +
+                "\t11. Atnaujinti informaciją apie prekę\n" +
+                "\t12. Pašalinti prekę\n" +
+                "\t13. Sužinoti, kas sudaro užsakymą}\n" +
+                "\t14. Baigti darbą"
         );
     }
 

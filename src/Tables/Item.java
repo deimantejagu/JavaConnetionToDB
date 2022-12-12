@@ -13,8 +13,18 @@ public class Item {
         this.connection = connection;
     }
 
-    public void CreateItem(String itemTitle, String category, float price){
+    public void CreateItem(String category, String itemTitle, float price) throws SQLException {
+        PreparedStatement statement =
+            connection.getConnection()
+                .prepareStatement(
+                        "INSERT INTO Preke (kategorija, pavadinimas, kaina) VALUES (?,?,?)"
+                );
 
+        statement.setString(1, category);
+        statement.setString(2, itemTitle);
+        statement.setFloat(3, price);
+
+        statement.executeUpdate();
     }
 
     public void ShowItems() throws SQLException {
@@ -22,20 +32,21 @@ public class Item {
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
-            System.out.printf(
-                "Kodas: %d Pavadinimas: %s Kategorija: %s Kaina: %f%n",
-                resultSet.getInt("kodas"),
-                resultSet.getString("pavadinimas"),
-                resultSet.getString("kategorija"),
-                resultSet.getFloat("kaina")
-            );
+            int kodas = resultSet.getInt("kodas");
+            String kategorija = resultSet.getString("kategorija");
+            String pavadinimas = resultSet.getString("pavadinimas");
+            float kaina = resultSet.getFloat("kaina");
+
+            System.out.printf("%-16d|%-26s|%-26s|%-12.2f%n", kodas, kategorija, pavadinimas, kaina);
         }
     }
 
     public void UpdateItem(int code){
     }
 
-    public void DeleteItem(int code){
-
+    public void DeleteItem(int code) throws SQLException {
+        PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM Preke WHERE kodas = ?");
+        statement.setInt(1, code);
+        statement.executeUpdate();
     }
 }
