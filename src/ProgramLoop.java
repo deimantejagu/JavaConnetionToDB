@@ -32,11 +32,15 @@ public class ProgramLoop {
                     System.out.println("Įveskite pirkėjo ID, kurio užsakymus norite sužinoti: ");
                     int id = input.nextInt();
                     userAllOrders.ShowAllUserOrders(id);
-                    //System.out.println(id);
+
                     ShowUserActions();
                     break;
                 case 2:
+                    CustomersHaveSpentInTheStore customers = new CustomersHaveSpentInTheStore();
+
                     System.out.println("Pirkėjai yra išleidę:\n");
+                    customers.ShowHowMuchCustomersHaveSpentInTheStore();
+
                     ShowUserActions();
                     break;
                 case 3:
