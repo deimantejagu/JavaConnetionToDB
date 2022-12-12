@@ -20,17 +20,19 @@ public class ProgramLoop {
                     UserActions();
                     break;
                 case 1:
-                    System.out.println("Ar norite pamatyti informacija apie pirkėjus? (taip/ne) ");
+                    UserAllOrders userAllOrders = new UserAllOrders();
+                    System.out.println("Ar norite pamatyti informaciją apie pirkėjus? (taip/ne) ");
                     option = data.nextLine();
 
                     if(Objects.equals(option, "taip")){
-                        System.out.println("Informacija apie pirkėjus:\n");
                         // Isspausdina apie pirkėjus
+                        userAllOrders.ShowUsers();
                     }
 
                     System.out.println("Įveskite pirkėjo ID, kurio užsakymus norite sužinoti: ");
                     int id = input.nextInt();
-                    System.out.println(id);
+                    userAllOrders.ShowAllUserOrders(id);
+                    //System.out.println(id);
                     ShowUserActions();
                     break;
                 case 2:
@@ -158,7 +160,7 @@ public class ProgramLoop {
         System.out.println(
             "Pasirinkite veiksmą, kurį norite atlikti:\n" +
                 "\t0. Pamatyti veiksmų sąrašą\n" +
-                "\t1. Sužinoti visus vieno pirkėjo užsakymus\n" +
+                "\t1. Sužinoti, visus vieno pirkėjo užsakymus\n" +
                 "\t2. Sužinoti, kiek pirkėjai yra išleidę parduotuvėje\n" +
                 "\t3. Sužinoti, visus įvykdytus užsakymus\n" +
                 "\t4. Užregistruoti naują pirkeją\n" +
@@ -173,7 +175,7 @@ public class ProgramLoop {
     }
 
     private static void ShowUserActions(){
-        System.out.println("Ar nprite pamatyti veiksmų sąrašą? (taip/ne)");
+        System.out.println("Ar norite pamatyti veiksmų sąrašą? (taip/ne)");
         String option = data.nextLine();
         if(Objects.equals(option, "taip")){
             UserActions();
