@@ -1,12 +1,12 @@
 package Tables;
 
-import DatabaseConfiguration.DbConnection;
+import DatabaseConfiguration.GetConnection;
 
 public class Order {
-    private DbConnection dbConnection;
+    private GetConnection connection;
 
-    public Order(DbConnection dbConnection) {
-        this.dbConnection = dbConnection;
+    public Order(GetConnection connection) {
+        this.connection = connection;
     }
 
     public void CreateOrder(int id, int duration, String itemTitle, String amount){

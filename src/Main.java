@@ -1,11 +1,9 @@
-import DatabaseConfiguration.Config;
-import DatabaseConfiguration.DbConnection;
+import DatabaseConfiguration.GetConnection;
+
+import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) {
-        DbConnection dbConnection = new DbConnection();
-        dbConnection.ConnectToDb(Config.DatabaseName(), Config.DatabaseUser(), Config.DatabasePassword());
-
+    public static void main(String[] args) throws SQLException {
         ProgramLoop.UserActions();
         ProgramLoop.ProgramWorking();
     }

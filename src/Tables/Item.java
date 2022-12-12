@@ -1,35 +1,38 @@
 package Tables;
 
-import java.util.Scanner;
-import DatabaseConfiguration.DbConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import DatabaseConfiguration.GetConnection;
 
 public class Item {
-    private DbConnection dbConnection;
-    private static final Scanner input = new Scanner(System.in);
+    private GetConnection connection;
 
-    public Item(DbConnection dbConnection) {
-        this.dbConnection = dbConnection;
+    public Item(GetConnection connection) {
+        this.connection = connection;
     }
 
     public void CreateItem(String itemTitle, String category, float price){
 
     }
 
-    public void ShowItems(){
+    public void ShowItems() throws SQLException {
+        PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM Preke");
+        ResultSet resultSet = statement.executeQuery();
 
+        while (resultSet.next()){
+            System.out.printf(
+                "Kodas: %d Pavadinimas: %s Kategorija: %s Kaina: %f%n",
+                resultSet.getInt("kodas"),
+                resultSet.getString("pavadinimas"),
+                resultSet.getString("kategorija"),
+                resultSet.getFloat("kaina")
+            );
+        }
     }
 
     public void UpdateItem(int code){
-        Scanner input = new Scanner(System.in);
-        int option = input.nextInt();
-
-        if(option == 0){
-            System.out.println("0");
-        } else if(option == 1){
-            System.out.println("1");
-        } else if(option == 2){
-            System.out.println("2");
-        }
     }
 
     public void DeleteItem(int code){
