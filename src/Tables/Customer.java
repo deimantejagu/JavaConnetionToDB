@@ -5,7 +5,6 @@ import DatabaseConfiguration.GetConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public class Customer {
     private GetConnection connection;

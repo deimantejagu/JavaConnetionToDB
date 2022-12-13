@@ -17,10 +17,13 @@ public class ProgramLoop {
     private static int selection = 0;
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void ProgramWorking() throws SQLException {
-        GetConnection connection = new GetConnection();
-        connection.setConnection();
+    private static GetConnection connection;
 
+    public ProgramLoop(GetConnection connection) {
+        this.connection = connection;
+    }
+
+    public void ProgramWorking() throws SQLException {
         Order order = new Order(connection);
         Customer customer = new Customer(connection);
         Item item = new Item(connection);
@@ -256,7 +259,7 @@ public class ProgramLoop {
         }
     }
 
-    public static void UserActions(){
+    public void UserActions(){
         System.out.println(
             "Pasirinkite veiksmą, kurį norite atlikti:\n" +
                 "\t0. Pamatyti veiksmų sąrašą\n" +
@@ -278,11 +281,12 @@ public class ProgramLoop {
     }
 
     private static void ShowUserActions(){
+        ProgramLoop programLoop = new ProgramLoop(connection);
         System.out.println("Ar norite pamatyti veiksmų sąrašą? (taip/ne)");
         Scanner data = new Scanner(System.in);
         String option = data.nextLine();
         if(Objects.equals(option, "taip")){
-            UserActions();
+            programLoop.UserActions();
         }
     }
 }
