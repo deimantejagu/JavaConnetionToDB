@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 public class ProgramLoop {
@@ -102,20 +104,41 @@ public class ProgramLoop {
                     int duration;
                     String title;
                     int amount;
+                    List<String> titles = new ArrayList<>();
+                    List<Integer> amounts = new ArrayList<>();
                     try {
                         System.out.println("Įveskite pirkėjo ID: ");
                         id = Integer.parseInt(br.readLine());
                         System.out.println("Įveskite pristatymo trukmę: ");
                         duration = Integer.parseInt(br.readLine());
-                        System.out.println("Įveskite prekės pavadinimą: ");
-                        title = br.readLine();
-                        System.out.println("Įveskite prekių kiekį: ");
-                        amount = Integer.parseInt(br.readLine());
+                        System.out.println("Įveskite prekes ir jų kiekį: ");
+                        System.out.println("Kai baigsite vesti prekes, parašykite <Baigta>");
+
+                        while(true) {
+                            System.out.println("Pavadinimas: ");
+                            title = br.readLine();
+
+                            if ("Baigta".equalsIgnoreCase(title)){
+                                break;
+                            } else {
+                                titles.add(title);
+                            }
+
+                            System.out.println("Kiekis: ");
+                            amount = Integer.parseInt(br.readLine());
+                            amounts.add(amount);
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 
-                    order.CreateOrder(id, duration, title, amount);
+                    order.CreateOrder(id, duration, titles, amounts);
+                    for(String titl:titles)
+                        System.out.println(titl);
+
+                    for(Integer am:amounts)
+                        System.out.println(am);
+
 
                     ShowUserActions();
                     break;
@@ -255,7 +278,7 @@ public class ProgramLoop {
                 "\t10. Pamatyti prekių sąrašą\n" +
                 "\t11. Atnaujinti informaciją apie prekę\n" +
                 "\t12. Pašalinti prekę\n" +
-                "\t13. Sužinoti, kas sudaro užsakymą}\n" +
+                "\t13. Sužinoti, kas sudaro užsakymą\n" +
                 "\t14. Baigti darbą"
         );
     }
