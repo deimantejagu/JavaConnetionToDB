@@ -14,7 +14,8 @@ public class UzsakymoElementas {
     }
 
     public void ShowOrdersStructure(int nr) throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM \"Uzsakymo elementas\" WHERE uzsakymo_nr = ?");
+        PreparedStatement statement = connection.getConnection().prepareStatement
+                ("SELECT * FROM \"Uzsakymo elementas\" WHERE uzsakymo_nr = ?");
         statement.setInt(1, nr);
         ResultSet resultSet = statement.executeQuery();
 

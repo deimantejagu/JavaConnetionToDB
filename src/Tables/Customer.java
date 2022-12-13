@@ -5,7 +5,7 @@ import DatabaseConfiguration.GetConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.Objects;
 
 public class Customer {
     private GetConnection connection;
@@ -31,7 +31,7 @@ public class Customer {
     }
 
     public void ShowCustomers() throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM Pirkejas");
+        PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM Pirkejas ORDER BY id");
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
@@ -46,7 +46,13 @@ public class Customer {
         }
     }
 
-    public void UpdateCustomer(int id){
+    public void UpdateCustomer(int id, String phoneNumber, String email) throws SQLException {
+        PreparedStatement statement = connection.getConnection().prepareStatement
+                ("UPDATE Pirkejas SET tel_numeris = ?, el_pastas = ? WHERE id = ?");
+        statement.setString(1, phoneNumber);
+        statement.setString(2, email);
+        statement.setInt(3, id);
+        statement.executeUpdate();
     }
 
     public void DeleteCustomer(int id) throws SQLException {

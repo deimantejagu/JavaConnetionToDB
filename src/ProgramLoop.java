@@ -29,7 +29,7 @@ public class ProgramLoop {
         while (selection < 14){
             selection = input.nextInt();
 
-            switch (selection){
+            switch (selection) {
                 case 0:
                     UserActions();
                     break;
@@ -68,22 +68,19 @@ public class ProgramLoop {
                     ShowUserActions();
                     break;
                 case 3:
-                    System.out.println("Įveskite pirkėjo ID, kurio informaciją norite atnaujinti: ");
-                    /*System.out.println(
-                        "Pasirinkite, kokią informaciją norite atnaujinti:\n" +
-                            "\t0. Telefono numerį\n" +
-                            "\t1. El. paštą\n" +
-                            "\t2. Adresą"
-                    );*/
-
                     int id;
                     try {
+                        System.out.println("Įveskite pirkėjo ID, kurio informaciją norite atnaujinti: ");
                         id = Integer.parseInt(br.readLine());
+                        System.out.println("Įveskite naują telefono numerį: ");
+                        phoneNumber = br.readLine();
+                        System.out.println("Įveskite naują el. paštą: ");
+                        email = br.readLine();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println(id);
+                    customer.UpdateCustomer(id, phoneNumber, email);
 
                     ShowUserActions();
                     break;
@@ -114,11 +111,11 @@ public class ProgramLoop {
                         System.out.println("Įveskite prekes ir jų kiekį: ");
                         System.out.println("Kai baigsite vesti prekes, parašykite <Baigta>");
 
-                        while(true) {
+                        while (true) {
                             System.out.println("Pavadinimas: ");
                             title = br.readLine();
 
-                            if ("Baigta".equalsIgnoreCase(title)){
+                            if ("Baigta".equalsIgnoreCase(title)) {
                                 break;
                             } else {
                                 titles.add(title);
@@ -133,10 +130,10 @@ public class ProgramLoop {
                     }
 
                     order.CreateOrder(id, duration, titles, amounts);
-                    for(String titl:titles)
+                    for (String titl : titles)
                         System.out.println(titl);
 
-                    for(Integer am:amounts)
+                    for (Integer am : amounts)
                         System.out.println(am);
 
 
@@ -208,22 +205,19 @@ public class ProgramLoop {
                     ShowUserActions();
                     break;
                 case 11:
-                    System.out.println("Įveskite prekės kodą, kurios informaciją norite atnaujinti: ");
-                    /*System.out.println(
-                        "Pasirinkite, kokią informaciją norite atnaujinti:\n" +
-                            "\t0. Pavadinimą\n" +
-                            "\t1. Kategoriją\n" +
-                            "\t2. Kainą"
-                    );*/
-
                     int code;
                     try {
+                        System.out.println("Įveskite prekės kodą, kurios informaciją norite atnaujinti: ");
                         code = Integer.parseInt(br.readLine());
+                        System.out.println("Įveskite naują prekės pavadinimą: ");
+                        title = br.readLine();
+                        System.out.println("Įveskite naują prekės kainą: ");
+                        price = Float.parseFloat(br.readLine());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
 
-                    System.out.println(code);
+                    item.UpdateItem(code, title, price);
 
                     ShowUserActions();
                     break;

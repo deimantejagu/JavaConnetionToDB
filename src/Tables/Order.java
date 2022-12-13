@@ -56,34 +56,10 @@ public class Order {
             elementStatement.setInt(3, amounts.get(i));
             elementStatement.executeUpdate();
         }
-
-
-//        PreparedStatement statement2 = connection.getConnection().prepareStatement("SELECT kodas FROM Preke WHERE pavadinimas = ?");
-//        statement2.setString(1, itemTitle);
-//        ResultSet resultSet = statement2.executeQuery();
-//        resultSet.next();
-//        int code = resultSet.getInt("kodas");
-//
-//        PreparedStatement statement4 = connection.getConnection().prepareStatement("SELECT COUNT(nr) FROM Uzsakymas");
-//        ResultSet resultSet4 = statement4.executeQuery();
-//        resultSet4.next();
-//        int nr = resultSet4.getInt(1);
-//
-//        PreparedStatement statement1 =
-//            connection.getConnection()
-//                .prepareStatement(
-//                        "INSERT INTO Uzsakymo elementas (uzsakymo_nr, prekes_kodas, kiekis) VALUES (?,?,?)"
-//                );
-//
-//
-//        statement1.setInt(1, nr);
-//        statement1.setInt(2, code);
-//        statement1.setInt(3, amount);
-//        statement.executeUpdate();
     }
 
     public void ShowOrders() throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM Uzsakymas");
+        PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM Uzsakymas ORDER BY nr");
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
