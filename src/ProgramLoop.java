@@ -62,17 +62,18 @@ public class ProgramLoop {
                     ShowUserActions();
                     break;
                 case 2:
-                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
-                    System.out.printf("%-18s%-30s%-30s%-30s%-30s%-30s%n", "ID", "Vardas", "Pavardė", "Tel. numeris", "El. paštas", "Adresas");
-                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    DrawCustomerTable();
                     customer.ShowCustomers();
-                    System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+                    DrawCustomersOneLine();
 
                     ShowUserActions();
                     break;
                 case 3:
                     int id;
                     try {
+                        DrawCustomerTable();
+                        customer.ShowCustomers();
+                        DrawCustomersOneLine();
                         System.out.println("Įveskite pirkėjo ID, kurio informaciją norite atnaujinti: ");
                         id = Integer.parseInt(br.readLine());
                         System.out.println("Įveskite naują telefono numerį: ");
@@ -91,6 +92,9 @@ public class ProgramLoop {
                     System.out.println("Įveskite pirkėjo ID, kurį norite pašalinti: ");
 
                     try {
+                        DrawCustomerTable();
+                        customer.ShowCustomers();
+                        DrawCustomersOneLine();
                         id = Integer.parseInt(br.readLine());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -107,6 +111,9 @@ public class ProgramLoop {
                     List<String> titles = new ArrayList<>();
                     List<Integer> amounts = new ArrayList<>();
                     try {
+                        DrawCustomerTable();
+                        customer.ShowCustomers();
+                        DrawCustomersOneLine();
                         System.out.println("Įveskite pirkėjo ID: ");
                         id = Integer.parseInt(br.readLine());
                         System.out.println("Įveskite pristatymo trukmę: ");
@@ -133,22 +140,13 @@ public class ProgramLoop {
                     }
 
                     order.CreateOrder(id, duration, titles, amounts);
-                    for (String titl : titles)
-                        System.out.println(titl);
-
-                    for (Integer am : amounts)
-                        System.out.println(am);
-
 
                     ShowUserActions();
                     break;
                 case 6:
-                    System.out.println("-----------------------------------------------------------------------------------------------------------------");
-                    System.out.printf("%-18s%-37s%-28s%-20s%-14s%n", "Nr.", "Užsakymo data", "Pristatymo trukmė", "Būsena", "Pirkėjo ID");
-                    System.out.println("------------------------------------------------------------------------------------------------------------------");
+                    DrawOrderTable();
                     order.ShowOrders();
-                    System.out.println("------------------------------------------------------------------------------------------------------------------");
-
+                    DrawOrdersOneLine();
 
                     ShowUserActions();
                     break;
@@ -156,6 +154,10 @@ public class ProgramLoop {
                     String state;
                     int nr;
                     try {
+                        DrawOrderTable();
+                        order.ShowOrders();
+                        DrawOrdersOneLine();
+
                         System.out.println("Pasirinkite užsakymo Nr., kurį norite atnaujinti: ");
                         nr = Integer.parseInt(br.readLine());
                         System.out.println("Įveskite užsakymo būseną: ");
@@ -169,6 +171,10 @@ public class ProgramLoop {
                     ShowUserActions();
                     break;
                 case 8:
+                    DrawOrderTable();
+                    order.ShowOrders();
+                    DrawOrdersOneLine();
+
                     System.out.println("Įveskite užsakymo Nr., kurį norite pašalinti: ");
                     try {
                         nr = Integer.parseInt(br.readLine());
@@ -199,17 +205,19 @@ public class ProgramLoop {
                     ShowUserActions();
                     break;
                 case 10:
-                    System.out.println("-------------------------------------------------------------------------------------");
-                    System.out.printf("%-18s%-28s%-28s%-14s%n", "Prekės kodas", "Kategorija", "Pavadinimas", "Kaina");
-                    System.out.println("-------------------------------------------------------------------------------------");
+                    DrawItemTable();
                     item.ShowItems();
-                    System.out.println("-------------------------------------------------------------------------------------");
+                    DrawItemsOneLine();
 
                     ShowUserActions();
                     break;
                 case 11:
                     int code;
                     try {
+                        DrawItemTable();
+                        item.ShowItems();
+                        DrawItemsOneLine();
+
                         System.out.println("Įveskite prekės kodą, kurios informaciją norite atnaujinti: ");
                         code = Integer.parseInt(br.readLine());
                         System.out.println("Įveskite naują prekės pavadinimą: ");
@@ -225,6 +233,10 @@ public class ProgramLoop {
                     ShowUserActions();
                     break;
                 case 12:
+                    DrawItemTable();
+                    item.ShowItems();
+                    DrawItemsOneLine();
+
                     System.out.println("Įveskite prekės kodą, kurią norite pašalinti: ");
                     try {
                         code = Integer.parseInt(br.readLine());
@@ -237,6 +249,10 @@ public class ProgramLoop {
                     ShowUserActions();
                     break;
                 case 13:
+                    DrawOrderTable();
+                    order.ShowOrders();
+                    DrawOrdersOneLine();
+
                     System.out.println("Įveskite užsakymo Nr., kurio sudėtį norite sužinoti ");
                     try {
                         nr = Integer.parseInt(br.readLine());
@@ -288,5 +304,35 @@ public class ProgramLoop {
         if(Objects.equals(option, "taip")){
             programLoop.UserActions();
         }
+    }
+
+    private static void DrawCustomerTable(){
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-18s%-30s%-30s%-30s%-30s%-30s%n", "ID", "Vardas", "Pavardė", "Tel. numeris", "El. paštas", "Adresas");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    private static void DrawCustomersOneLine(){
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    private static void DrawOrderTable(){
+        System.out.println("-----------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-18s%-37s%-28s%-20s%-14s%n", "Nr.", "Užsakymo data", "Pristatymo trukmė", "Būsena", "Pirkėjo ID");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------");
+    }
+
+    private static void DrawOrdersOneLine(){
+        System.out.println("-----------------------------------------------------------------------------------------------------------------");
+    }
+
+    private static void DrawItemTable(){
+        System.out.println("-------------------------------------------------------------------------------------");
+        System.out.printf("%-18s%-28s%-28s%-14s%n", "Prekės kodas", "Kategorija", "Pavadinimas", "Kaina");
+        System.out.println("-------------------------------------------------------------------------------------");
+    }
+
+    private static void DrawItemsOneLine(){
+        System.out.println("-------------------------------------------------------------------------------------");
     }
 }
