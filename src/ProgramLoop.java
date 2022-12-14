@@ -259,12 +259,9 @@ public class ProgramLoop {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-
-                    System.out.println("-----------------------------------------------------------------------------------------------------");
-                    System.out.printf("%-26s%-18s%-18s%-30s%-18s%n", "Prekės Nr. eilėje", "Užsakymo Nr.", "Prekės Kodas", "Pavadinimas", "Kiekis");
-                    System.out.println("-----------------------------------------------------------------------------------------------------");
+                    HelperMethods.DrawOrderElementTable();
                     elementas.ShowOrdersStructure(nr);
-                    System.out.println("-----------------------------------------------------------------------------------------------------");
+                    HelperMethods.DrawOrderElementOneLine();
 
                     HelperMethods.ShowUserActions();
                     break;

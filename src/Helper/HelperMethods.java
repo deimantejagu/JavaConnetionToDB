@@ -63,4 +63,14 @@ public class HelperMethods {
     public static void DrawItemsOneLine(){
         System.out.println("-------------------------------------------------------------------------------------");
     }
+
+    public static void DrawOrderElementTable(){
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+        System.out.printf("%-26s%-18s%-18s%-30s%-18s%n", "Prekės Nr. eilėje", "Užsakymo Nr.", "Prekės Kodas", "Pavadinimas", "Kiekis");
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+    }
+
+    public static void DrawOrderElementOneLine(){
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+    }
 }
