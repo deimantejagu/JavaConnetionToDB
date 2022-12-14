@@ -1,4 +1,5 @@
 import DatabaseConfiguration.GetConnection;
+import Helper.HelperMethods;
 import Tables.Customer;
 import Tables.Item;
 import Tables.Order;
@@ -10,7 +11,6 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 public class ProgramLoop {
     private static final Scanner input = new Scanner(System.in);
@@ -34,7 +34,7 @@ public class ProgramLoop {
 
             switch (selection) {
                 case 0:
-                    UserActions();
+                    HelperMethods.UserActions();
                     break;
                 case 1:
                     String name;
@@ -59,21 +59,21 @@ public class ProgramLoop {
 
                     customer.CreateCustomer(name, surname, phoneNumber, email, address);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 2:
-                    DrawCustomerTable();
+                    HelperMethods.DrawCustomerTable();
                     customer.ShowCustomers();
-                    DrawCustomersOneLine();
+                    HelperMethods.DrawCustomersOneLine();
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 3:
                     int id;
                     try {
-                        DrawCustomerTable();
+                        HelperMethods.DrawCustomerTable();
                         customer.ShowCustomers();
-                        DrawCustomersOneLine();
+                        HelperMethods.DrawCustomersOneLine();
                         System.out.println("Įveskite pirkėjo ID, kurio informaciją norite atnaujinti: ");
                         id = Integer.parseInt(br.readLine());
                         System.out.println("Įveskite naują telefono numerį: ");
@@ -86,15 +86,15 @@ public class ProgramLoop {
 
                     customer.UpdateCustomer(id, phoneNumber, email);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 4:
                     System.out.println("Įveskite pirkėjo ID, kurį norite pašalinti: ");
 
                     try {
-                        DrawCustomerTable();
+                        HelperMethods.DrawCustomerTable();
                         customer.ShowCustomers();
-                        DrawCustomersOneLine();
+                        HelperMethods.DrawCustomersOneLine();
                         id = Integer.parseInt(br.readLine());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -102,7 +102,7 @@ public class ProgramLoop {
 
                     customer.DeleteCustomer(id);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 5:
                     int duration;
@@ -111,9 +111,9 @@ public class ProgramLoop {
                     List<String> titles = new ArrayList<>();
                     List<Integer> amounts = new ArrayList<>();
                     try {
-                        DrawCustomerTable();
+                        HelperMethods.DrawCustomerTable();
                         customer.ShowCustomers();
-                        DrawCustomersOneLine();
+                        HelperMethods.DrawCustomersOneLine();
                         System.out.println("Įveskite pirkėjo ID: ");
                         id = Integer.parseInt(br.readLine());
                         System.out.println("Įveskite pristatymo trukmę: ");
@@ -141,22 +141,22 @@ public class ProgramLoop {
 
                     order.CreateOrder(id, duration, titles, amounts);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 6:
-                    DrawOrderTable();
+                    HelperMethods.DrawOrderTable();
                     order.ShowOrders();
-                    DrawOrdersOneLine();
+                    HelperMethods.DrawOrdersOneLine();
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 7:
                     String state;
                     int nr;
                     try {
-                        DrawOrderTable();
+                        HelperMethods.DrawOrderTable();
                         order.ShowOrders();
-                        DrawOrdersOneLine();
+                        HelperMethods.DrawOrdersOneLine();
 
                         System.out.println("Pasirinkite užsakymo Nr., kurį norite atnaujinti: ");
                         nr = Integer.parseInt(br.readLine());
@@ -168,12 +168,12 @@ public class ProgramLoop {
 
                     order.UpdateOrdersState(state, nr);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 8:
-                    DrawOrderTable();
+                    HelperMethods.DrawOrderTable();
                     order.ShowOrders();
-                    DrawOrdersOneLine();
+                    HelperMethods.DrawOrdersOneLine();
 
                     System.out.println("Įveskite užsakymo Nr., kurį norite pašalinti: ");
                     try {
@@ -184,7 +184,7 @@ public class ProgramLoop {
 
                     order.DeleteOrder(nr);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 9:
                     String category;
@@ -202,21 +202,21 @@ public class ProgramLoop {
 
                     item.CreateItem(category, title, price);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 10:
-                    DrawItemTable();
+                    HelperMethods.DrawItemTable();
                     item.ShowItems();
-                    DrawItemsOneLine();
+                    HelperMethods.DrawItemsOneLine();
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 11:
                     int code;
                     try {
-                        DrawItemTable();
+                        HelperMethods.DrawItemTable();
                         item.ShowItems();
-                        DrawItemsOneLine();
+                        HelperMethods.DrawItemsOneLine();
 
                         System.out.println("Įveskite prekės kodą, kurios informaciją norite atnaujinti: ");
                         code = Integer.parseInt(br.readLine());
@@ -230,12 +230,12 @@ public class ProgramLoop {
 
                     item.UpdateItem(code, title, price);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 12:
-                    DrawItemTable();
+                    HelperMethods.DrawItemTable();
                     item.ShowItems();
-                    DrawItemsOneLine();
+                    HelperMethods.DrawItemsOneLine();
 
                     System.out.println("Įveskite prekės kodą, kurią norite pašalinti: ");
                     try {
@@ -246,12 +246,12 @@ public class ProgramLoop {
 
                     item.DeleteItem(code);
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 13:
-                    DrawOrderTable();
+                    HelperMethods.DrawOrderTable();
                     order.ShowOrders();
-                    DrawOrdersOneLine();
+                    HelperMethods.DrawOrdersOneLine();
 
                     System.out.println("Įveskite užsakymo Nr., kurio sudėtį norite sužinoti ");
                     try {
@@ -266,73 +266,12 @@ public class ProgramLoop {
                     elementas.ShowOrdersStructure(nr);
                     System.out.println("-----------------------------------------------------------------------------------------------------");
 
-                    ShowUserActions();
+                    HelperMethods.ShowUserActions();
                     break;
                 case 14:
                     System.out.println("Programa išsijungia...");
                     break;
             }
         }
-    }
-
-    public void UserActions(){
-        System.out.println(
-            "Pasirinkite veiksmą, kurį norite atlikti:\n" +
-                "\t0. Pamatyti veiksmų sąrašą\n" +
-                "\t1. Užregistruoti naują pirkėją\n" +
-                "\t2. Pamatyti pirkėjų sąrašą\n" +
-                "\t3. Atnaujinti informaciją apie pirkėją\n" +
-                "\t4. Pašalinti pirkėją\n" +
-                "\t5. Sukurti naują užsakymą\n" +
-                "\t6. Pamatyti užsakymų sąrašą\n" +
-                "\t7. Atnaujinti užsakymo būseną\n" +
-                "\t8. Pašalinti užsakymą\n" +
-                "\t9. Pridėti naujas prekes\n" +
-                "\t10. Pamatyti prekių sąrašą\n" +
-                "\t11. Atnaujinti informaciją apie prekę\n" +
-                "\t12. Pašalinti prekę\n" +
-                "\t13. Sužinoti, kas sudaro užsakymą\n" +
-                "\t14. Baigti darbą"
-        );
-    }
-
-    private static void ShowUserActions(){
-        ProgramLoop programLoop = new ProgramLoop(connection);
-        System.out.println("Ar norite pamatyti veiksmų sąrašą? (taip/ne)");
-        Scanner data = new Scanner(System.in);
-        String option = data.nextLine();
-        if(Objects.equals(option, "taip")){
-            programLoop.UserActions();
-        }
-    }
-
-    private static void DrawCustomerTable(){
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-18s%-30s%-30s%-30s%-30s%-30s%n", "ID", "Vardas", "Pavardė", "Tel. numeris", "El. paštas", "Adresas");
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
-    }
-
-    private static void DrawCustomersOneLine(){
-        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
-    }
-
-    private static void DrawOrderTable(){
-        System.out.println("-----------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-18s%-37s%-28s%-20s%-14s%n", "Nr.", "Užsakymo data", "Pristatymo trukmė", "Būsena", "Pirkėjo ID");
-        System.out.println("-----------------------------------------------------------------------------------------------------------------");
-    }
-
-    private static void DrawOrdersOneLine(){
-        System.out.println("-----------------------------------------------------------------------------------------------------------------");
-    }
-
-    private static void DrawItemTable(){
-        System.out.println("-------------------------------------------------------------------------------------");
-        System.out.printf("%-18s%-28s%-28s%-14s%n", "Prekės kodas", "Kategorija", "Pavadinimas", "Kaina");
-        System.out.println("-------------------------------------------------------------------------------------");
-    }
-
-    private static void DrawItemsOneLine(){
-        System.out.println("-------------------------------------------------------------------------------------");
     }
 }

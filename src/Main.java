@@ -1,4 +1,5 @@
 import DatabaseConfiguration.GetConnection;
+import Helper.HelperMethods;
 
 import java.sql.SQLException;
 
@@ -8,7 +9,7 @@ public class Main {
         connection.setConnection();
 
         ProgramLoop programLoop = new ProgramLoop(connection);
-        programLoop.UserActions();
+        HelperMethods.UserActions();
         programLoop.ProgramWorking();
     }
 }
