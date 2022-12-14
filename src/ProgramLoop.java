@@ -2,7 +2,7 @@ import DatabaseConfiguration.GetConnection;
 import Tables.Customer;
 import Tables.Item;
 import Tables.Order;
-import Tables.UzsakymoElementas;
+import Tables.OrderElement;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class ProgramLoop {
         Order order = new Order(connection);
         Customer customer = new Customer(connection);
         Item item = new Item(connection);
-        UzsakymoElementas elementas = new UzsakymoElementas(connection);
+        OrderElement elementas = new OrderElement(connection);
 
         while (selection < 14){
             selection = input.nextInt();

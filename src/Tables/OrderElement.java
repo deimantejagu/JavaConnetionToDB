@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UzsakymoElementas {
+public class OrderElement {
     private GetConnection connection;
 
-    public UzsakymoElementas(GetConnection connection) {
+    public OrderElement(GetConnection connection) {
         this.connection = connection;
     }
 

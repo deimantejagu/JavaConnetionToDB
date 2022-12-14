@@ -15,54 +15,63 @@ public class Order {
     }
 
     public void CreateOrder(int id, int duration, List<String> titles, List<Integer> amounts) throws SQLException {
+        PreparedStatement orderStatement =
+            connection.getConnection()
+                .prepareStatement(
+                        "INSERT INTO Uzsakymas (pristatymo_trukme, pirkejo_id) VALUES (?,?)"
+                );
+
+        PreparedStatement nrStatement =
+            connection.getConnection()
+                .prepareStatement(
+                        "SELECT nr FROM Uzsakymas ORDER BY nr DESC LIMIT 1"
+                );
+
+        PreparedStatement itemStatement =
+            connection.getConnection()
+                .prepareStatement(
+                        "SELECT kodas FROM Preke WHERE pavadinimas = ?"
+                );
+
+        PreparedStatement elementStatement =
+            connection.getConnection()
+                .prepareStatement(
+                        "INSERT INTO \"Uzsakymo elementas\" (uzsakymo_nr, prekes_kodas, kiekis) VALUES (?,?,?)"
+                );
+
         try {
             connection.getConnection().setAutoCommit(false);
 
-            PreparedStatement orderStatement =
-                    connection.getConnection()
-                            .prepareStatement(
-                                    "INSERT INTO Uzsakymas (pristatymo_trukme, pirkejo_id) VALUES (?,?)"
-                            );
+            // Order statement
             orderStatement.setInt(1, duration);
             orderStatement.setInt(2, id);
             orderStatement.executeUpdate();
-
-            PreparedStatement nrStatement =
-                    connection.getConnection()
-                            .prepareStatement(
-                                    "SELECT nr FROM Uzsakymas ORDER BY nr DESC LIMIT 1"
-                            );
+            //Nr statement
             ResultSet resultSet = nrStatement.executeQuery();
             resultSet.next();
             int nr = resultSet.getInt("nr");
 
-            PreparedStatement itemStatement =
-                    connection.getConnection()
-                            .prepareStatement(
-                                    "SELECT kodas FROM Preke WHERE pavadinimas = ?"
-                            );
-
-            PreparedStatement elementStatement =
-                    connection.getConnection()
-                            .prepareStatement(
-                                    "INSERT INTO \"Uzsakymo elementas\" (uzsakymo_nr, prekes_kodas, kiekis) VALUES (?,?,?)"
-                            );
 
             for (int i = 0; i < amounts.size(); i++) {
                 elementStatement.setInt(1, nr);
 
+                // Item Statement
                 itemStatement.setString(1, titles.get(i));
                 ResultSet resultSetcode = itemStatement.executeQuery();
                 resultSetcode.next();
                 int code = resultSetcode.getInt("kodas");
 
+                // Element statement
                 elementStatement.setInt(2, code);
                 elementStatement.setInt(3, amounts.get(i));
                 elementStatement.executeUpdate();
             }
+
+            connection.getConnection().commit();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             connection.getConnection().rollback();
+            System.err.println("SQLException: " + e.getMessage());
+            connection.getConnection().setAutoCommit(true);
         }
     }
 
