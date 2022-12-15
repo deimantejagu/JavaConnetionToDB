@@ -95,6 +95,7 @@ public class Order {
         }
     }
 
+    // 'Priimtas', 'Vykdomas', 'Issiustas', 'Ivykdytas'
     public void UpdateOrdersState(String state, int nr) throws SQLException {
         PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE Uzsakymas SET busena = ? WHERE nr = ?");
         statement.setString(1, state);
