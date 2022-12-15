@@ -15,28 +15,33 @@ public class Order {
     }
 
     public void CreateOrder(int id, int duration, List<String> titles, List<Integer> amounts) throws SQLException {
+        // Sukuria naują užsakymą
         PreparedStatement orderStatement =
             connection.getConnection()
                 .prepareStatement(
-                        "INSERT INTO Uzsakymas (pristatymo_trukme, pirkejo_id) VALUES (?,?)"
+                    "INSERT INTO Uzsakymas (pristatymo_trukme, pirkejo_id) VALUES (?,?)"
                 );
 
+        // Pasiima paskutinį sukurtą užsakymą, kad jam galėtumėm pridėti užsakymo elementus
         PreparedStatement nrStatement =
             connection.getConnection()
                 .prepareStatement(
-                        "SELECT nr FROM Uzsakymas ORDER BY nr DESC LIMIT 1"
+                    "SELECT nr FROM Uzsakymas ORDER BY nr DESC LIMIT 1"
                 );
 
+        // Kadangi vartotojas įveda prekės pavadinimą, o užsakymo elemente prekė yra
+        // aprašoma jos kodu, tai pagal pavadinimą suranda prekės kodą
         PreparedStatement itemStatement =
             connection.getConnection()
                 .prepareStatement(
-                        "SELECT kodas FROM Preke WHERE pavadinimas = ?"
+                    "SELECT kodas FROM Preke WHERE pavadinimas = ?"
                 );
 
+        // Sukuria užsakymo elementą
         PreparedStatement elementStatement =
             connection.getConnection()
                 .prepareStatement(
-                        "INSERT INTO \"Uzsakymo elementas\" (uzsakymo_nr, prekes_kodas, kiekis) VALUES (?,?,?)"
+                    "INSERT INTO \"Uzsakymo elementas\" (uzsakymo_nr, prekes_kodas, kiekis) VALUES (?,?,?)"
                 );
 
         try {

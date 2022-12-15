@@ -17,7 +17,7 @@ public class Item {
         PreparedStatement statement =
             connection.getConnection()
                 .prepareStatement(
-                        "INSERT INTO Preke (kategorija, pavadinimas, kaina) VALUES (?,?,?)"
+                    "INSERT INTO Preke (kategorija, pavadinimas, kaina) VALUES (?,?,?)"
                 );
 
         statement.setString(1, category);
@@ -29,7 +29,7 @@ public class Item {
 
     public void ShowItems() throws SQLException {
         PreparedStatement statement = connection.getConnection().prepareStatement
-                ("SELECT * FROM Preke ORDER BY kodas");
+            ("SELECT * FROM Preke ORDER BY kodas");
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
@@ -44,7 +44,7 @@ public class Item {
 
     public void UpdateItem(int code, String ttile, float price) throws SQLException {
         PreparedStatement statement = connection.getConnection().prepareStatement
-                ("UPDATE Preke SET pavadinimas = ?, kaina = ? WHERE kodas = ?");
+            ("UPDATE Preke SET pavadinimas = ?, kaina = ? WHERE kodas = ?");
         statement.setString(1, ttile);
         statement.setFloat(2, price);
         statement.setInt(3, code);

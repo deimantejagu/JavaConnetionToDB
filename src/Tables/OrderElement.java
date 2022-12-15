@@ -14,11 +14,13 @@ public class OrderElement {
     }
 
     public void ShowOrdersStructure(int nr) throws SQLException {
+        // Išspausinda visą lentelę "Uzsakymo elementas"
         PreparedStatement statement = connection.getConnection().prepareStatement
-                ("SELECT * FROM \"Uzsakymo elementas\" WHERE uzsakymo_nr = ?");
+            ("SELECT * FROM \"Uzsakymo elementas\" WHERE uzsakymo_nr = ?");
         statement.setInt(1, nr);
         ResultSet resultSet = statement.executeQuery();
 
+        // Pagal prekės kodą įterpia pavadinimą, kad būtų paprasčiau matyti užsakymo sudėtį
         PreparedStatement statement1 = connection.getConnection().prepareStatement("SELECT pavadinimas FROM Preke WHERE kodas = ?");
 
         while (resultSet.next()){

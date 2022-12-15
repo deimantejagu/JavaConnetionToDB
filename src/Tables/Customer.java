@@ -17,7 +17,7 @@ public class Customer {
         PreparedStatement statement =
             connection.getConnection()
                 .prepareStatement(
-                        "INSERT INTO Pirkejas (vardas, pavarde, tel_numeris, el_pastas, adresas) VALUES (?,?,?,?,?)"
+                    "INSERT INTO Pirkejas (vardas, pavarde, tel_numeris, el_pastas, adresas) VALUES (?,?,?,?,?)"
                 );
 
         statement.setString(1, name);
@@ -47,7 +47,7 @@ public class Customer {
 
     public void UpdateCustomer(int id, String phoneNumber, String email) throws SQLException {
         PreparedStatement statement = connection.getConnection().prepareStatement
-                ("UPDATE Pirkejas SET tel_numeris = ?, el_pastas = ? WHERE id = ?");
+            ("UPDATE Pirkejas SET tel_numeris = ?, el_pastas = ? WHERE id = ?");
         statement.setString(1, phoneNumber);
         statement.setString(2, email);
         statement.setInt(3, id);
