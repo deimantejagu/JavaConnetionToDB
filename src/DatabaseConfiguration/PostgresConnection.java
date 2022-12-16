@@ -4,7 +4,6 @@ import Contracts.IConnection;
 import java.sql.Connection;
 
 public class PostgresConnection implements IConnection {
-
     public Connection connection;
 
     @Override
