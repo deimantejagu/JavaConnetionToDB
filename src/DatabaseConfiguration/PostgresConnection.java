@@ -1,20 +1,20 @@
 package DatabaseConfiguration;
 
-import Services.DbConnectionService;
+import Contracts.IConnection;
 import java.sql.Connection;
 
-public class GetConnection implements DbConnectionService {
+public class PostgresConnection implements IConnection {
 
     public Connection connection;
 
     @Override
-    public Connection getConnection() {
+    public Connection GetConnection() {
 
         return connection;
     }
 
     @Override
-    public Connection setConnection() {
+    public Connection SetConnection() {
         DbConnection dbConnection = new DbConnection();
         this.connection = dbConnection.ConnectToDb(Config.DatabaseName(), Config.DatabaseUser(), Config.DatabasePassword());
 

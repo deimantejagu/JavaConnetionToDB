@@ -3,7 +3,7 @@ package Helper;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class HelperMethods {
+public class PrintTableHelper {
     public static void UserActions(){
         System.out.println(
             "Pasirinkite veiksmą, kurį norite atlikti:\n" +

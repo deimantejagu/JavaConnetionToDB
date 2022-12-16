@@ -1,30 +1,30 @@
-package Tables;
+package Models;
 
-import DatabaseConfiguration.GetConnection;
+import DatabaseConfiguration.PostgresConnection;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
-public class Order {
-    private GetConnection connection;
+import static java.sql.Connection.TRANSACTION_SERIALIZABLE;
 
-    public Order(GetConnection connection) {
+public class Order {
+    private PostgresConnection connection;
+
+    public Order(PostgresConnection connection) {
         this.connection = connection;
     }
 
-    public void CreateOrder(int id, int duration, List<String> titles, List<Integer> amounts) throws SQLException {
+    public void create(int id, int duration, List<String> titles, List<Integer> amounts) throws SQLException {
         // Sukuria naują užsakymą
         PreparedStatement orderStatement =
-            connection.getConnection()
+            connection.GetConnection()
                 .prepareStatement(
                     "INSERT INTO Uzsakymas (pristatymo_trukme, pirkejo_id) VALUES (?,?)"
                 );
 
         // Pasiima paskutinį sukurtą užsakymą, kad jam galėtumėm pridėti užsakymo elementus
         PreparedStatement nrStatement =
-            connection.getConnection()
+            connection.GetConnection()
                 .prepareStatement(
                     "SELECT nr FROM Uzsakymas ORDER BY nr DESC LIMIT 1"
                 );
@@ -32,20 +32,21 @@ public class Order {
         // Kadangi vartotojas įveda prekės pavadinimą, o užsakymo elemente prekė yra
         // aprašoma jos kodu, tai pagal pavadinimą suranda prekės kodą
         PreparedStatement itemStatement =
-            connection.getConnection()
+            connection.GetConnection()
                 .prepareStatement(
                     "SELECT kodas FROM Preke WHERE pavadinimas = ?"
                 );
 
         // Sukuria užsakymo elementą
         PreparedStatement elementStatement =
-            connection.getConnection()
+            connection.GetConnection()
                 .prepareStatement(
                     "INSERT INTO \"Uzsakymo elementas\" (uzsakymo_nr, prekes_kodas, kiekis) VALUES (?,?,?)"
                 );
 
         try {
-            connection.getConnection().setAutoCommit(false);
+            connection.GetConnection().setAutoCommit(false);
+            connection.GetConnection().setTransactionIsolation(TRANSACTION_SERIALIZABLE);
 
             // Order statement
             orderStatement.setInt(1, duration);
@@ -72,16 +73,16 @@ public class Order {
                 elementStatement.executeUpdate();
             }
 
-            connection.getConnection().commit();
+            connection.GetConnection().commit();
         } catch (SQLException e) {
-            connection.getConnection().rollback();
+            connection.GetConnection().rollback();
             System.err.println("SQLException: " + e.getMessage());
-            connection.getConnection().setAutoCommit(true);
+            connection.GetConnection().setAutoCommit(true);
         }
     }
 
-    public void ShowOrders() throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM Uzsakymas ORDER BY nr");
+    public void Show() throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement("SELECT * FROM Uzsakymas ORDER BY nr");
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
@@ -95,16 +96,16 @@ public class Order {
         }
     }
 
-    // 'Priimtas', 'Vykdomas', 'Issiustas', 'Ivykdytas'
-    public void UpdateOrdersState(String state, int nr) throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE Uzsakymas SET busena = ? WHERE nr = ?");
+    // [DEFAULT: 'Priimtas]', 'Vykdomas', 'Issiustas', 'Ivykdytas'
+    public void Update(String state, int nr) throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement("UPDATE Uzsakymas SET busena = ? WHERE nr = ?");
         statement.setString(1, state);
         statement.setInt(2, nr);
         statement.executeUpdate();
     }
 
-    public void DeleteOrder(int nr) throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM Uzsakymas WHERE nr = ?");
+    public void Delete(int nr) throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement("DELETE FROM Uzsakymas WHERE nr = ?");
         statement.setInt(1, nr);
         statement.executeUpdate();
     }

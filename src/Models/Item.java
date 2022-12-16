@@ -1,21 +1,21 @@
-package Tables;
+package Models;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import DatabaseConfiguration.GetConnection;
+import DatabaseConfiguration.PostgresConnection;
 
 public class Item {
-    private GetConnection connection;
+    private PostgresConnection connection;
 
-    public Item(GetConnection connection) {
+    public Item(PostgresConnection connection) {
         this.connection = connection;
     }
 
-    public void CreateItem(String category, String itemTitle, float price) throws SQLException {
+    public void Create(String category, String itemTitle, float price) throws SQLException {
         PreparedStatement statement =
-            connection.getConnection()
+            connection.GetConnection()
                 .prepareStatement(
                     "INSERT INTO Preke (kategorija, pavadinimas, kaina) VALUES (?,?,?)"
                 );
@@ -27,8 +27,8 @@ public class Item {
         statement.executeUpdate();
     }
 
-    public void ShowItems() throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement
+    public void Show() throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement
             ("SELECT * FROM Preke ORDER BY kodas");
         ResultSet resultSet = statement.executeQuery();
 
@@ -42,8 +42,8 @@ public class Item {
         }
     }
 
-    public void UpdateItem(int code, String ttile, float price) throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement
+    public void Update(int code, String ttile, float price) throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement
             ("UPDATE Preke SET pavadinimas = ?, kaina = ? WHERE kodas = ?");
         statement.setString(1, ttile);
         statement.setFloat(2, price);
@@ -51,8 +51,8 @@ public class Item {
         statement.executeUpdate();
     }
 
-    public void DeleteItem(int code) throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM Preke WHERE kodas = ?");
+    public void Delete(int code) throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement("DELETE FROM Preke WHERE kodas = ?");
         statement.setInt(1, code);
         statement.executeUpdate();
     }

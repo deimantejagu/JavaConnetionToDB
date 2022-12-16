@@ -1,21 +1,21 @@
-package Tables;
+package Models;
 
-import DatabaseConfiguration.GetConnection;
+import DatabaseConfiguration.PostgresConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Customer {
-    private GetConnection connection;
+    private PostgresConnection connection;
 
-    public Customer(GetConnection connection) {
+    public Customer(PostgresConnection connection) {
         this.connection = connection;
     }
 
-    public void CreateCustomer(String name, String surname, String phoneNumber, String email, String address) throws SQLException {
+    public void Create(String name, String surname, String phoneNumber, String email, String address) throws SQLException {
         PreparedStatement statement =
-            connection.getConnection()
+            connection.GetConnection()
                 .prepareStatement(
                     "INSERT INTO Pirkejas (vardas, pavarde, tel_numeris, el_pastas, adresas) VALUES (?,?,?,?,?)"
                 );
@@ -29,8 +29,8 @@ public class Customer {
         statement.executeUpdate();
     }
 
-    public void ShowCustomers() throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM Pirkejas ORDER BY id");
+    public void Show() throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement("SELECT * FROM Pirkejas ORDER BY id");
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
@@ -45,8 +45,8 @@ public class Customer {
         }
     }
 
-    public void UpdateCustomer(int id, String phoneNumber, String email) throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement
+    public void Update(int id, String phoneNumber, String email) throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement
             ("UPDATE Pirkejas SET tel_numeris = ?, el_pastas = ? WHERE id = ?");
         statement.setString(1, phoneNumber);
         statement.setString(2, email);
@@ -54,8 +54,8 @@ public class Customer {
         statement.executeUpdate();
     }
 
-    public void DeleteCustomer(int id) throws SQLException {
-        PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM Pirkejas WHERE id = ?");
+    public void Delete(int id) throws SQLException {
+        PreparedStatement statement = connection.GetConnection().prepareStatement("DELETE FROM Pirkejas WHERE id = ?");
         statement.setInt(1, id);
         statement.executeUpdate();
     }
