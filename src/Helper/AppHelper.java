@@ -1,6 +1,7 @@
 package Helper;
 
 import Models.*;
+import Models.Validators.Validation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,12 +34,32 @@ public class AppHelper {
         try {
             System.out.println("Įveskite vardą: ");
             name = br.readLine();
+            while (!Validation.StringValidation(name)){
+                System.out.println("Įveskite vardą: ");
+                name = br.readLine();
+            }
+
             System.out.println("Įveskite pavardę: ");
             surname = br.readLine();
+            while (!Validation.StringValidation(surname)){
+                System.out.println("Įveskite pavardę: ");
+                surname = br.readLine();
+            }
+
             System.out.println("Įveskite telefono numerį: ");
             phoneNumber = br.readLine();
+            while (!Validation.PhoneNumberValidation(phoneNumber)){
+                System.out.println("Įveskite telefono numerį: ");
+                phoneNumber = br.readLine();
+            }
+
             System.out.println("Įveskite el. paštą: ");
             email = br.readLine();
+            while (!Validation.EmailValidation(email)){
+                System.out.println("Įveskite el. paštą: ");
+                email = br.readLine();
+            }
+
             System.out.println("Įveskite adresą: ");
             address = br.readLine();
         } catch (IOException e) {
