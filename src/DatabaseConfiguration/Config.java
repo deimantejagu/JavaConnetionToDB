@@ -10,6 +10,6 @@ public class Config {
     }
 
     public static String DatabasePassword(){
-        return "dundukas123";
+        return "";
     }
 }
